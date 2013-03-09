@@ -1,0 +1,15 @@
+<% if @sale.sale_items.empty? %>
+    Your basket is empty? Add any books from left
+<% else %>
+  Your reading list:
+  <table>
+    <% @sale.sale_items.each do |item| %>
+      <tr>
+        <td><%= image_tag item.book.photo, :size=>"40x60" %></td>
+        <td><%= item.book.name.first(10) %></td>
+        <td>HK$ <%= item.book.price %></td>
+        <td><%= link_to image_tag("trash.png", :size => "20x20"), sale_sale_item_path(@sale, item), :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

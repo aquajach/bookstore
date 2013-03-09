@@ -1,0 +1,29 @@
+<h1>Listing books</h1>
+<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+
+<table style="float: left;">
+<% @books.each_slice(3) do |books| %>
+  <tr>
+    <% books.each do |book| %>
+      <td width="200" style="width:200px;padding: 10px;">
+        <%= image_tag book.photo, :size => "200x300" %> <br>
+        <%= book.name %> <br>
+        <%= book.author %> <br>
+        <%= book.release_date %> <br>
+        <p style="text-align: left;"><%= book.description %> </p><br>
+        HK$ <%= book.price %><br>
+        <%= @sale.sale_items.map(&:book).include?(book) ? "In your basket now" :
+                    (link_to "Add to basket", sale_sale_items_path(@sale, :book_id => book), :method => :post) %> <br>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<div style="width:280px;float:right">
+  <%= render "sales/basket" %>
+</div>
+
+<br />
+
+<%= link_to 'New Book', new_book_path if current_user.is_admin?%>
